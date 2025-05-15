@@ -1,14 +1,56 @@
-# firsthelidon
+# First Helidon Project
 
 Helidon MP application that uses JPA with an in-memory H2 database.
 
-## Build and run
+## Project Overview
 
+This is a simple Helidon MP project that demonstrates the key features of the Helidon microservices framework. The application implements RESTful endpoints and showcases configuration, health checks, metrics, and more.
 
-With JDK21
+## Getting Started
+
+### Prerequisites
+- JDK 21+
+- Maven 3.8+
+- Docker (optional, for containerization)
+
+### Building the Application
+
 ```bash
-mvn package
+mvn clean package
+```
+
+The command above creates an executable jar file and a Docker image.
+
+### Running the Application
+
+```bash
 java -jar target/firsthelidon.jar
+```
+
+The application will be available at http://localhost:8080.
+
+## Features
+
+This application demonstrates:
+
+- REST endpoints using JAX-RS
+- Configuration using MicroProfile Config
+- Health checks using MicroProfile Health
+- Metrics using MicroProfile Metrics
+- OpenAPI documentation
+
+## API Documentation
+
+When the application is running, access the OpenAPI documentation at:
+- http://localhost:8080/openapi (YAML format)
+- http://localhost:8080/openapi-ui (Swagger UI)
+
+## Testing
+
+Run the tests using:
+
+```bash
+mvn test
 ```
 
 ## Exercise the application
@@ -18,7 +60,6 @@ Basic:
 curl -X GET http://localhost:8080/simple-greet
 Hello World!
 ```
-
 
 JSON:
 ```
@@ -44,32 +85,12 @@ curl -X GET http://localhost:8080/type
 curl -H "Content-Type: application/json" --request POST --data '{"id":100, "type":1, "name":"Test"}' http://localhost:8080/pokemon
 ```
 
-
 ## Try health
 
 ```
 curl -s -X GET http://localhost:8080/health
 {"outcome":"UP",...
-
 ```
-
-
-## Building a Native Image
-
-The generation of native binaries requires an installation of GraalVM 22.1.0+.
-
-You can build a native binary using Maven as follows:
-
-```
-mvn -Pnative-image install -DskipTests
-```
-
-The generation of the executable binary may take a few minutes to complete depending on
-your hardware and operating system. When completed, the executable file will be available
-under the `target` directory and be named after the artifact ID you have chosen during the
-project generation phase.
-
-
 
 ## Try metrics
 
@@ -85,36 +106,17 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 . . .
 ```
 
+## Docker
 
+### Building the Docker Image
 
-### Database Setup
+The Docker image is built automatically during the Maven package phase.
 
-Start your database before running this example.
+### Running the Docker Container
 
-Example docker commands to start databases in temporary containers:
-
-H2:
-```
-docker run --rm --name h2 -p 9092:9082 -p 8082:8082 nemerosa/h2
-```
-For details, see https://www.h2database.com/html/cheatSheet.html
-
-
-
-## Building the Docker Image
-
-```
-docker build -t firsthelidon .
-```
-
-## Running the Docker Image
-
-```
+```bash
 docker run --rm -p 8080:8080 firsthelidon:latest
 ```
-
-Exercise the application as described above.
-                                
 
 ## Run the application in Kubernetes
 
@@ -144,6 +146,20 @@ After you’re done, cleanup.
 kubectl delete -f app.yaml
 ```
 
+## Building a Native Image
+
+The generation of native binaries requires an installation of GraalVM 22.1.0+.
+
+You can build a native binary using Maven as follows:
+
+```
+mvn -Pnative-image install -DskipTests
+```
+
+The generation of the executable binary may take a few minutes to complete depending on
+your hardware and operating system. When completed, the executable file will be available
+under the `target` directory and be named after the artifact ID you have chosen during the
+project generation phase.
 
 ## Building a Custom Runtime Image
 
@@ -178,4 +194,27 @@ mvn package -Pjlink-image -Djlink.image.addClassDataSharingArchive=false
 ```
 
 For more information on available configuration options see the helidon-maven-plugin documentation.
-                                
+
+## Project Structure
+
+```
+src
+├── main
+│   ├── java               # Java source files
+│   │   └── com/example
+│   │       └── rest       # REST resources
+│   └── resources
+│       ├── META-INF       # Configuration files
+│       └── WEB            # Web resources
+└── test
+    └── java               # Test source files
+```
+
+## Contributing
+
+Please feel free to contribute to this project by opening issues or submitting pull requests.
+
+## License
+
+This project is licensed under the Apache License 2.0.
+`
